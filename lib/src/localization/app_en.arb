@@ -1,0 +1,6 @@
+{
+  "appTitle": "bivens_cms",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
