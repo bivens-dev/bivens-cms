@@ -60,10 +60,12 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             useMaterial3: DefaultApplicationTheme.material3Enabled,
             colorScheme: DefaultApplicationTheme.lightColorScheme,
+            typography: DefaultApplicationTheme.typography,
           ),
           darkTheme: ThemeData(
             useMaterial3: DefaultApplicationTheme.material3Enabled,
             colorScheme: DefaultApplicationTheme.darkColorScheme,
+            typography: DefaultApplicationTheme.typography,
           ),
           themeMode: settingsController.themeMode,
 
