@@ -1,3 +1,5 @@
+import 'package:bivens_cms/src/themes/application_theme.dart';
+import 'package:bivens_cms/src/themes/default_theme/theme.dart';
 import 'package:flutter/material.dart';
 
 /// A service that stores and retrieves user settings.
@@ -9,8 +11,15 @@ class SettingsService {
   /// Loads the User's preferred ThemeMode from local or remote storage.
   Future<ThemeMode> themeMode() async => ThemeMode.system;
 
+  Future<ApplicationTheme> theme() async => defaultApplicationTheme;
+
   /// Persists the user's preferred ThemeMode to local or remote storage.
   Future<void> updateThemeMode(ThemeMode theme) async {
+    // Use the shared_preferences package to persist settings locally or the
+    // http package to persist settings over the network.
+  }
+
+  Future<void> updateTheme(ApplicationTheme theme) async {
     // Use the shared_preferences package to persist settings locally or the
     // http package to persist settings over the network.
   }

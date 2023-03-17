@@ -1,8 +1,8 @@
+import 'package:bivens_cms/src/themes/default_theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'themes/default_theme/theme.dart';
 import 'sample_feature/sample_item_details_view.dart';
 import 'sample_feature/sample_item_list_view.dart';
 import 'settings/settings_controller.dart';
@@ -58,14 +58,16 @@ class MyApp extends StatelessWidget {
           // preferred ThemeMode (light, dark, or system default) from the
           // SettingsController to display the correct theme.
           theme: ThemeData(
-            useMaterial3: DefaultApplicationTheme.material3Enabled,
-            colorScheme: DefaultApplicationTheme.lightColorScheme,
-            typography: DefaultApplicationTheme.typography,
+            useMaterial3: settingsController.applicationTheme.material3Enabled,
+            colorScheme: settingsController.applicationTheme.lightColorScheme,
+            typography:
+                settingsController.applicationTheme.typographyConfiguration,
           ),
           darkTheme: ThemeData(
-            useMaterial3: DefaultApplicationTheme.material3Enabled,
-            colorScheme: DefaultApplicationTheme.darkColorScheme,
-            typography: DefaultApplicationTheme.typography,
+            useMaterial3: settingsController.applicationTheme.material3Enabled,
+            colorScheme: settingsController.applicationTheme.darkColorScheme,
+            typography:
+                settingsController.applicationTheme.typographyConfiguration,
           ),
           themeMode: settingsController.themeMode,
 

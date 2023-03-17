@@ -1,10 +1,11 @@
+import 'package:bivens_cms/src/themes/application_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'lib/color_schemes.g.dart';
 
-class DefaultApplicationTheme {
-  static bool get material3Enabled => true;
-  static ColorScheme get lightColorScheme => lightColorSchemeData;
-  static ColorScheme get darkColorScheme => darkColorSchemeData;
-  static Typography get typography => Typography.material2021();
-}
+final defaultApplicationTheme = ApplicationTheme(
+  lightColorScheme: lightColorSchemeData,
+  darkColorScheme: darkColorSchemeData,
+  typographyConfiguration: Typography.material2021(),
+  material3Enabled: true,
+);
