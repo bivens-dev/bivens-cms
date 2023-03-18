@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../themes/application_theme.dart';
+import '../../../../themes/application_themes.dart';
 import '../../../settings_controller.dart';
 
 class ApplicationThemeSetting extends StatelessWidget {
@@ -21,24 +21,24 @@ class ApplicationThemeSetting extends StatelessWidget {
     );
   }
 
-  DropdownMenu<ThemeConfiguration> _buildMenu() {
-    return DropdownMenu<ThemeConfiguration>(
+  DropdownMenu<ApplicationTheme> _buildMenu() {
+    return DropdownMenu<ApplicationTheme>(
       initialSelection: controller.applicationTheme,
       dropdownMenuEntries: [
         DropdownMenuEntry(
-          value: ApplicationTheme.defaultTheme,
-          label: "Space",
+          value: ApplicationTheme.space,
+          label: ApplicationTheme.space.name,
         ),
         DropdownMenuEntry(
-          value: ApplicationTheme.rainforestTheme,
-          label: "Rainforest",
+          value: ApplicationTheme.rainforest,
+          label: ApplicationTheme.rainforest.name,
         ),
         DropdownMenuEntry(
-          value: ApplicationTheme.oceanTheme,
-          label: "Ocean",
+          value: ApplicationTheme.ocean,
+          label: ApplicationTheme.ocean.name,
         ),
       ],
-      onSelected: (ThemeConfiguration? theme) {
+      onSelected: (ApplicationTheme? theme) {
         controller.updateTheme(theme);
       },
     );

@@ -1,6 +1,6 @@
-import 'package:bivens_cms/src/themes/application_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../themes/application_themes.dart';
 import 'settings_service.dart';
 
 /// A class that many Widgets can interact with to read user settings, update
@@ -18,12 +18,12 @@ class SettingsController with ChangeNotifier {
   // also persisting the changes with the SettingsService.
   late ThemeMode _themeMode;
 
-  late ThemeConfiguration _applicationTheme;
+  late ApplicationTheme _applicationTheme;
 
   // Allow Widgets to read the user's preferred ThemeMode.
   ThemeMode get themeMode => _themeMode;
 
-  ThemeConfiguration get applicationTheme => _applicationTheme;
+  ApplicationTheme get applicationTheme => _applicationTheme;
 
   /// Load the user's settings from the SettingsService. It may load from a
   /// local database or the internet. The controller only knows it can load the
@@ -55,7 +55,7 @@ class SettingsController with ChangeNotifier {
   }
 
   /// Update and persist the ApplicationTheme based on the user's selection.
-  Future<void> updateTheme(ThemeConfiguration? newTheme) async {
+  Future<void> updateTheme(ApplicationTheme? newTheme) async {
     if (newTheme == null) return;
 
     // Do not perform any work if new and old ApplicationTheme are identical
