@@ -14,60 +14,73 @@ class SettingsView extends StatelessWidget {
 
   final SettingsController controller;
 
+  DropdownMenu<ThemeConfiguration> _buildThemeMenu(BuildContext context) {
+    return DropdownMenu<ThemeConfiguration>(
+      initialSelection: controller.applicationTheme,
+      dropdownMenuEntries: [
+        DropdownMenuEntry(
+          value: ApplicationTheme.defaultTheme,
+          label: "Space",
+        ),
+        DropdownMenuEntry(
+          value: ApplicationTheme.rainforestTheme,
+          label: "Rainforest",
+        ),
+        DropdownMenuEntry(
+          value: ApplicationTheme.oceanTheme,
+          label: "Ocean",
+        ),
+      ],
+      onSelected: (ThemeConfiguration? theme) {
+        controller.updateTheme(theme);
+      },
+    );
+  }
+
+  ListTile _buildThemeSetting(BuildContext context) {
+    return ListTile(
+      leading: const Icon(Icons.color_lens),
+      title: const Text("Application Theme"),
+      subtitle: const Text('Find a color scheme that works for you.'),
+      trailing: _buildThemeMenu(context),
+    );
+  }
+
+  ListTile _buildThemeModeSetting(BuildContext context) {
+    return ListTile(
+      leading: const Icon(Icons.light_mode),
+      title: const Text("Theme Mode"),
+      subtitle: const Text('Configure if you wish to use light or dark mode'),
+      trailing: _buildThemeModeMenu(context),
+    );
+  }
+
+  DropdownMenu<ThemeMode> _buildThemeModeMenu(BuildContext context) {
+    return DropdownMenu<ThemeMode>(
+      initialSelection: controller.themeMode,
+      dropdownMenuEntries: const [
+        DropdownMenuEntry(value: ThemeMode.system, label: "System Default"),
+        DropdownMenuEntry(value: ThemeMode.dark, label: "Dark Mode"),
+        DropdownMenuEntry(value: ThemeMode.light, label: "Light Mode"),
+      ],
+      onSelected: (ThemeMode? mode) {
+        controller.updateThemeMode(mode);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        // Glue the SettingsController to the theme selection DropdownButton.
-        //
-        // When a user selects a theme from the dropdown list, the
-        // SettingsController is updated, which rebuilds the MaterialApp.
-        child: Column(
-          children: [
-            DropdownButton<ThemeMode>(
-              // Read the selected themeMode from the controller
-              value: controller.themeMode,
-              // Call the updateThemeMode method any time the user selects a theme.
-              onChanged: controller.updateThemeMode,
-              items: const [
-                DropdownMenuItem(
-                  value: ThemeMode.system,
-                  child: Text('System Theme'),
-                ),
-                DropdownMenuItem(
-                  value: ThemeMode.light,
-                  child: Text('Light Theme'),
-                ),
-                DropdownMenuItem(
-                  value: ThemeMode.dark,
-                  child: Text('Dark Theme'),
-                )
-              ],
-            ),
-            DropdownButton<ThemeConfiguration>(
-              value: controller.applicationTheme,
-              onChanged: controller.updateTheme,
-              items: [
-                DropdownMenuItem(
-                  value: ApplicationTheme.defaultTheme,
-                  child: const Text('Space'),
-                ),
-                DropdownMenuItem(
-                  value: ApplicationTheme.oceanTheme,
-                  child: const Text('Ocean'),
-                ),
-                DropdownMenuItem(
-                  value: ApplicationTheme.rainforestTheme,
-                  child: const Text('Rainforest'),
-                )
-              ],
-            )
-          ],
-        ),
+      body: ListView(
+        padding: const EdgeInsets.all(8),
+        children: <ListTile>[
+          _buildThemeModeSetting(context),
+          _buildThemeSetting(context),
+        ],
       ),
     );
   }
