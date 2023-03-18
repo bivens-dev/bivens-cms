@@ -1,3 +1,4 @@
+import 'package:bivens_cms/src/themes/application_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'settings_service.dart';
@@ -17,14 +18,19 @@ class SettingsController with ChangeNotifier {
   // also persisting the changes with the SettingsService.
   late ThemeMode _themeMode;
 
+  late ThemeConfiguration _applicationTheme;
+
   // Allow Widgets to read the user's preferred ThemeMode.
   ThemeMode get themeMode => _themeMode;
+
+  ThemeConfiguration get applicationTheme => _applicationTheme;
 
   /// Load the user's settings from the SettingsService. It may load from a
   /// local database or the internet. The controller only knows it can load the
   /// settings from the service.
   Future<void> loadSettings() async {
     _themeMode = await _settingsService.themeMode();
+    _applicationTheme = await _settingsService.theme();
 
     // Important! Inform listeners a change has occurred.
     notifyListeners();
@@ -46,5 +52,23 @@ class SettingsController with ChangeNotifier {
     // Persist the changes to a local database or the internet using the
     // SettingService.
     await _settingsService.updateThemeMode(newThemeMode);
+  }
+
+  /// Update and persist the ApplicationTheme based on the user's selection.
+  Future<void> updateTheme(ThemeConfiguration? newTheme) async {
+    if (newTheme == null) return;
+
+    // Do not perform any work if new and old ApplicationTheme are identical
+    if (newTheme == _applicationTheme) return;
+
+    // Otherwise, store the new ApplicationTheme in memory
+    _applicationTheme = newTheme;
+
+    // Important! Inform listeners a change has occurred.
+    notifyListeners();
+
+    // Persist the changes to a local database or the internet using the
+    // SettingService.
+    await _settingsService.updateTheme(newTheme);
   }
 }
