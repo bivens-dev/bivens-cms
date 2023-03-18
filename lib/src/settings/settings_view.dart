@@ -1,3 +1,4 @@
+import 'package:bivens_cms/src/themes/application_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'settings_controller.dart';
@@ -25,23 +26,45 @@ class SettingsView extends StatelessWidget {
         //
         // When a user selects a theme from the dropdown list, the
         // SettingsController is updated, which rebuilds the MaterialApp.
-        child: DropdownButton<ThemeMode>(
-          // Read the selected themeMode from the controller
-          value: controller.themeMode,
-          // Call the updateThemeMode method any time the user selects a theme.
-          onChanged: controller.updateThemeMode,
-          items: const [
-            DropdownMenuItem(
-              value: ThemeMode.system,
-              child: Text('System Theme'),
+        child: Column(
+          children: [
+            DropdownButton<ThemeMode>(
+              // Read the selected themeMode from the controller
+              value: controller.themeMode,
+              // Call the updateThemeMode method any time the user selects a theme.
+              onChanged: controller.updateThemeMode,
+              items: const [
+                DropdownMenuItem(
+                  value: ThemeMode.system,
+                  child: Text('System Theme'),
+                ),
+                DropdownMenuItem(
+                  value: ThemeMode.light,
+                  child: Text('Light Theme'),
+                ),
+                DropdownMenuItem(
+                  value: ThemeMode.dark,
+                  child: Text('Dark Theme'),
+                )
+              ],
             ),
-            DropdownMenuItem(
-              value: ThemeMode.light,
-              child: Text('Light Theme'),
-            ),
-            DropdownMenuItem(
-              value: ThemeMode.dark,
-              child: Text('Dark Theme'),
+            DropdownButton<ThemeConfiguration>(
+              value: controller.applicationTheme,
+              onChanged: controller.updateTheme,
+              items: [
+                DropdownMenuItem(
+                  value: ApplicationTheme.defaultTheme,
+                  child: const Text('Space'),
+                ),
+                DropdownMenuItem(
+                  value: ApplicationTheme.oceanTheme,
+                  child: const Text('Ocean'),
+                ),
+                DropdownMenuItem(
+                  value: ApplicationTheme.rainforestTheme,
+                  child: const Text('Rainforest'),
+                )
+              ],
             )
           ],
         ),

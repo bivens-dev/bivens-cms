@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'lib/color_schemes.g.dart';
 
-final defaultApplicationTheme = ThemeConfiguration(
-  lightColorScheme: lightColorSchemeData,
-  darkColorScheme: darkColorSchemeData,
+final oceanApplicationTheme = ThemeConfiguration(
+  lightColorScheme: lightColorScheme,
+  darkColorScheme: darkColorScheme,
   typographyConfiguration: Typography.material2021(),
   material3Enabled: true,
 );

@@ -18,12 +18,12 @@ class SettingsController with ChangeNotifier {
   // also persisting the changes with the SettingsService.
   late ThemeMode _themeMode;
 
-  late ApplicationTheme _applicationTheme;
+  late ThemeConfiguration _applicationTheme;
 
   // Allow Widgets to read the user's preferred ThemeMode.
   ThemeMode get themeMode => _themeMode;
 
-  ApplicationTheme get applicationTheme => _applicationTheme;
+  ThemeConfiguration get applicationTheme => _applicationTheme;
 
   /// Load the user's settings from the SettingsService. It may load from a
   /// local database or the internet. The controller only knows it can load the
@@ -55,7 +55,7 @@ class SettingsController with ChangeNotifier {
   }
 
   /// Update and persist the ApplicationTheme based on the user's selection.
-  Future<void> updateTheme(ApplicationTheme? newTheme) async {
+  Future<void> updateTheme(ThemeConfiguration? newTheme) async {
     if (newTheme == null) return;
 
     // Do not perform any work if new and old ApplicationTheme are identical
