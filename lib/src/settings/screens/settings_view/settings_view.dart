@@ -22,16 +22,22 @@ class SettingsView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Settings'),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(8),
-        children: <Widget>[
-          ThemeModeSetting(
-            controller: controller,
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 800.0),
+          color: Theme.of(context).cardColor,
+          child: ListView(
+            padding: const EdgeInsets.all(8),
+            children: <Widget>[
+              ThemeModeSetting(
+                controller: controller,
+              ),
+              ApplicationThemeSetting(
+                controller: controller,
+              ),
+            ],
           ),
-          ApplicationThemeSetting(
-            controller: controller,
-          ),
-        ],
+        ),
       ),
     );
   }
