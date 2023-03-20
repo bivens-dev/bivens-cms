@@ -1,3 +1,5 @@
-int calculate() {
-  return 6 * 7;
+import 'package:cms_api/cms_api.dart';
+
+Shelf addShelf() {
+  return Shelf(name: "Good books");
 }
