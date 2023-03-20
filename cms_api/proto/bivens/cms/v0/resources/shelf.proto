@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package bivens.cms.v0.resources;
+
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+
+// Proto file describing the shelf resource.
+
+// A shelf.
+message Shelf {
+  option (google.api.resource) = {
+    type: "cms.bivens.dev/Shelf"
+    pattern: "shelf/{shelf_id}"
+  };
+
+  // Immutable. The resource name of the shelf.
+  // Shelf resource names have the form:
+  //
+  // `shelf/{shelf_id}`
+  string resource_name = 1 [
+    (google.api.field_behavior) = IMMUTABLE,
+    (google.api.resource_reference) = {
+      type: "cms.bivens.dev/Shelf"
+    }
+  ];
+
+  // Output only. The ID of the shelf.
+  int64 id = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The name of the Shelf.
+  //
+  // This field is required and should not be empty when creating new shelves.
+  //
+  // It must contain fewer than 255 UTF-8 full-width characters.
+  //
+  // It must not contain any null (code point 0x0), NL line feed
+  // (code point 0xA) or carriage return (code point 0xD) characters.
+  string name = 3;
+
+  // A theme of the shelf (fiction, poetry, etc).
+  string theme = 4;
+}
