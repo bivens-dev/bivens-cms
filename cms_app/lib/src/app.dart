@@ -1,7 +1,9 @@
+import 'package:cms_app/src/resource-editor/resources/bookshelves/controllers/bookstore_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'resource-editor/resources/bookshelves/screens/list/bookshelves_list_view.dart';
 import 'sample_feature/sample_item_details_view.dart';
 import 'sample_feature/sample_item_list_view.dart';
 import 'settings/settings_controller.dart';
@@ -12,9 +14,12 @@ class MyApp extends StatelessWidget {
   const MyApp({
     super.key,
     required this.settingsController,
+    required this.bookstoreController,
   });
 
   final SettingsController settingsController;
+
+  final BookstoreController bookstoreController;
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +76,15 @@ class MyApp extends StatelessWidget {
                     return SettingsView(controller: settingsController);
                   case SampleItemDetailsView.routeName:
                     return const SampleItemDetailsView();
+                  case BookshelvesListView.routeName:
+                    return BookshelvesListView(
+                      controller: bookstoreController,
+                    );
                   case SampleItemListView.routeName:
                   default:
-                    return const SampleItemListView();
+                    return BookshelvesListView(
+                      controller: bookstoreController,
+                    );
                 }
               },
             );

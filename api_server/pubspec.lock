@@ -129,7 +129,7 @@ packages:
     source: hosted
     version: "1.4.0"
   grpc:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: grpc
       sha256: a73c16e4f6a4a819be892bb2c73cc1d0b00e36095f69b0738cc91a733e3d27ba

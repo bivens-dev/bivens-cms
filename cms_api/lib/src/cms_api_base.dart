@@ -3,3 +3,8 @@ export 'generated/bivens/cms/v0/services/bookstore_service.pb.dart';
 // Resources
 export 'generated/bivens/cms/v0/resources/book.pb.dart';
 export 'generated/bivens/cms/v0/resources/shelf.pb.dart';
+// gRPC
+export 'generated/bivens/cms/v0/services/bookstore_service.pbgrpc.dart';
+export 'generated/bivens/cms/v0/services/workspace_service.pbgrpc.dart';
+// Support
+export 'generated/google/protobuf/empty.pb.dart';

@@ -24,13 +24,25 @@ option java_package = "com.google.endpoints.examples.bookstore";
 
 
 import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/field_mask.proto";
+import "google/rpc/status.proto";
+
+
 import "bivens/cms/v0/resources/shelf.proto";
 import "bivens/cms/v0/resources/book.proto";
+
 
 // A simple Bookstore API.
 //
 // The API manages shelves and books resources. Shelves contain books.
 service Bookstore {
+  option (google.api.default_host) = "localhost:50051";
+  // option (google.api.oauth_scopes) = "https://www.googleapis.com/auth/adwords";
+
   // Returns a list of all shelves in the bookstore.
   rpc ListShelves(google.protobuf.Empty) returns (ListShelvesResponse) {}
   // Creates a new shelf in the bookstore.
@@ -44,7 +56,12 @@ service Bookstore {
   // Creates a new book.
   rpc CreateBook(CreateBookRequest) returns (bivens.cms.v0.resources.Book) {}
   // Returns a specific book.
-  rpc GetBook(GetBookRequest) returns (bivens.cms.v0.resources.Book) {}
+  rpc GetBook(GetBookRequest) returns (bivens.cms.v0.resources.Book) {
+    option (google.api.http) = {
+      get: "/v0/{name=shelves/*/books/*}"
+    };
+    option (google.api.method_signature) = "name";
+  }
   // Deletes a book from a shelf.
   rpc DeleteBook(DeleteBookRequest) returns (google.protobuf.Empty) {}
 }
@@ -93,12 +110,14 @@ message CreateBookRequest {
   bivens.cms.v0.resources.Book book = 2;
 }
 
-// Request message for GetBook method.
 message GetBookRequest {
-  // The ID of the shelf from which to retrieve a book.
-  int64 shelf = 1;
-  // The ID of the book to retrieve.
-  int64 book = 2;
+  // The name of the book to retrieve.
+  // Format: shelves/{shelf}/books/{book}
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "cms.bivens.dev/Book"
+    }];
 }
 
 // Request message for DeleteBook method.

@@ -14,7 +14,7 @@
 
 compiler:
   # optional: pin the version of the protoc compiler
-  # version: 3.12.4
+  # version: "22.2"
   # optional: pass grpc flag to --dart_out protoc string. Defaults to "false"
   grpcEnabled: true
 
@@ -86,7 +86,7 @@ sources:
 
 # optional: specify the path for the generated output from protoc.
 # Is relative from the project root. Defaults to "lib/src/generated"/
-# output: "lib/src/generated"
+# output: "lib/src/compiled"
 
 
 include:
