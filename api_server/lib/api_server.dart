@@ -41,7 +41,7 @@ class BookstoreService extends BookstoreServiceBase {
     // TODO: implement getShelf
     // throw UnimplementedError();
     print('Inside get Shelf');
-    return Future.sync(() => Shelf(name: "Good books"));
+    return Future.sync(() => Shelf(name: "True Crime", theme: "Non-Fiction"));
   }
 
   @override
@@ -54,6 +54,9 @@ class BookstoreService extends BookstoreServiceBase {
   @override
   Future<ListShelvesResponse> listShelves(ServiceCall call, Empty request) {
     // TODO: implement listShelves
-    throw UnimplementedError();
+    // throw UnimplementedError();
+    print('Inside get Shelves');
+    final shelves = [Shelf(name: "Good books"), Shelf(name: "Bad books")];
+    return Future.sync(() => ListShelvesResponse(shelves: shelves));
   }
 }

@@ -1,11 +1,12 @@
 import 'package:cms_api/cms_api.dart';
-import 'package:cms_app/src/resource-editor/resources/bookshelves/controllers/bookstore_controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
+import 'src/bookstore/controllers/bookstore_controller.dart';
 
 void main() async {
   // Set up the SettingsController, which will glue user settings to multiple

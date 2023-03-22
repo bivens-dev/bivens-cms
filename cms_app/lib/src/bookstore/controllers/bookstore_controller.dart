@@ -6,9 +6,20 @@ class BookstoreController with ChangeNotifier {
 
   BookstoreController({required this.apiClient});
 
-  Future<Shelf> getShelf() async {
+  Future<Shelf> handleFabClick() async {
     final response = await apiClient.getShelf(GetShelfRequest());
     print(response.name);
+    return response;
+  }
+
+  Future<List<Shelf>> getShelves() async {
+    final response = await apiClient.listShelves(Empty());
+
+    return response.shelves;
+  }
+
+  Future<Shelf> shelfDetailDemo() async {
+    final response = await apiClient.getShelf(GetShelfRequest());
     return response;
   }
 }
