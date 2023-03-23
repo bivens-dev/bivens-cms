@@ -1,29 +1,39 @@
 import 'package:cms_api/cms_api.dart';
 import 'package:flutter/material.dart';
-
 import '../../../settings/screens/settings_view/settings_view.dart';
 import '../../controllers/bookstore_controller.dart';
-import '../detail/bookshelf_detail_view.dart';
-import 'lib/list_screen_error_state.dart';
-import 'lib/list_screen_loading_state.dart';
-import 'lib/list_screen_success_state.dart';
+import 'lib/detail_screen_error_state.dart';
+import 'lib/detail_screen_loading_state.dart';
+import 'lib/detali_screen_success_state.dart';
 
-/// Displays detailed information about a SampleItem.
-class BookshelvesListView extends StatelessWidget {
-  const BookshelvesListView({
+class DetailShelfView extends StatefulWidget {
+  const DetailShelfView({
     super.key,
-    required this.controller,
+    required this.bookstoreController,
   });
 
-  static const routeName = '/bookshelves';
+  final BookstoreController bookstoreController;
 
-  final BookstoreController controller;
+  static const routeName = '/bookshelves/1';
+
+  @override
+  State<StatefulWidget> createState() => _DetailShelfViewState();
+}
+
+class _DetailShelfViewState extends State<DetailShelfView> {
+  late Future<Shelf> futureShelf;
+
+  @override
+  void initState() {
+    super.initState();
+    futureShelf = widget.bookstoreController.shelfDetailDemo();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bookshelves'),
+        title: const Text('Bookshelf'),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -39,23 +49,22 @@ class BookshelvesListView extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            FutureBuilder<List<Shelf>>(
-              future: controller.getShelves(),
+            FutureBuilder<Shelf>(
+              future: futureShelf,
               builder: (context, snapshot) {
                 if (snapshot.hasData &&
                     snapshot.connectionState == ConnectionState.done) {
-                  final remoteDataSource = snapshot.data!;
-                  return ListScreenSuccessState(
-                    shelves: remoteDataSource,
+                  final remoteData = snapshot.data!;
+                  return DetailScreenSuccessState(
+                    shelf: remoteData,
                   );
                 } else if (snapshot.hasError) {
-                  return ListScreenErrorState(
-                    error: snapshot.error,
+                  return DetailScreenErrorState(
+                    error: snapshot.error!,
                   );
                 }
-
                 // By default, show a loading spinner.
-                return const ListScreenLoadingState();
+                return const DetailScreenLoadingState();
               },
             )
           ],
@@ -64,7 +73,7 @@ class BookshelvesListView extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           // Add your onPressed code here!
-          Navigator.restorablePushNamed(context, BookshelfDetailView.routeName);
+          widget.bookstoreController.handleFabClick();
         },
         label: const Text('Approve'),
         icon: const Icon(Icons.thumb_up),

@@ -1,10 +1,10 @@
-import 'package:cms_app/src/bookstore/controllers/bookstore_controller.dart';
-import 'package:cms_app/src/bookstore/screens/detail/bookshelf_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'bookstore/screens/list/bookshelves_list_view.dart';
+import 'bookstore/controllers/bookstore_controller.dart';
+import 'bookstore/views/detail/detail_shelf_view.dart';
+import 'bookstore/views/list/list_shelves_view.dart';
 import 'sample_feature/sample_item_details_view.dart';
 import 'sample_feature/sample_item_list_view.dart';
 import 'settings/settings_controller.dart';
@@ -77,18 +77,18 @@ class MyApp extends StatelessWidget {
                     return SettingsView(controller: settingsController);
                   case SampleItemDetailsView.routeName:
                     return const SampleItemDetailsView();
-                  case BookshelvesListView.routeName:
-                    return BookshelvesListView(
-                      controller: bookstoreController,
+                  case ListShelvesView.routeName:
+                    return ListShelvesView(
+                      bookstoreController: bookstoreController,
                     );
-                  case BookshelfDetailView.routeName:
-                    return BookshelfDetailView(
-                      controller: bookstoreController,
+                  case DetailShelfView.routeName:
+                    return DetailShelfView(
+                      bookstoreController: bookstoreController,
                     );
                   case SampleItemListView.routeName:
                   default:
-                    return BookshelvesListView(
-                      controller: bookstoreController,
+                    return ListShelvesView(
+                      bookstoreController: bookstoreController,
                     );
                 }
               },
