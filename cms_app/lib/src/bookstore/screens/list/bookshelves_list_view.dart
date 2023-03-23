@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import '../../../settings/screens/settings_view/settings_view.dart';
 import '../../controllers/bookstore_controller.dart';
 import '../detail/bookshelf_detail_view.dart';
+import 'lib/list_screen_error_state.dart';
+import 'lib/list_screen_loading_state.dart';
+import 'lib/list_screen_success_state.dart';
 
 /// Displays detailed information about a SampleItem.
 class BookshelvesListView extends StatelessWidget {
@@ -36,18 +39,23 @@ class BookshelvesListView extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            const Text('More Information Here'),
             FutureBuilder<List<Shelf>>(
               future: controller.getShelves(),
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return const Text('Got the data');
+                if (snapshot.hasData &&
+                    snapshot.connectionState == ConnectionState.done) {
+                  final remoteDataSource = snapshot.data!;
+                  return ListScreenSuccessState(
+                    shelves: remoteDataSource,
+                  );
                 } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
+                  return ListScreenErrorState(
+                    error: snapshot.error,
+                  );
                 }
 
                 // By default, show a loading spinner.
-                return const CircularProgressIndicator();
+                return const ListScreenLoadingState();
               },
             )
           ],

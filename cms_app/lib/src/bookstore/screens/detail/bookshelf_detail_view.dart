@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../../settings/screens/settings_view/settings_view.dart';
 import '../../controllers/bookstore_controller.dart';
+import 'lib/detail_screen_error_state.dart';
+import 'lib/detail_screen_loading_state.dart';
+import 'lib/detali_screen_success_state.dart';
 
 /// Displays detailed information about a SampleItem.
 class BookshelfDetailView extends StatelessWidget {
@@ -17,10 +20,6 @@ class BookshelfDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context)
-        .textTheme
-        .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bookshelf'),
@@ -42,36 +41,20 @@ class BookshelfDetailView extends StatelessWidget {
             FutureBuilder<Shelf>(
               future: controller.shelfDetailDemo(),
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Card(
-                    elevation: 0,
-                    color: Theme.of(context).colorScheme.surfaceVariant,
-                    child: SizedBox(
-                      width: 500,
-                      height: 100,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ListTile(
-                            leading: const Icon(Icons.book),
-                            trailing: FilledButton(
-                                onPressed: onPressed,
-                                child: const Text('Edit')),
-                            title: Text(
-                              snapshot.data!.name,
-                            ),
-                            subtitle: Text(snapshot.data!.theme),
-                          ),
-                        ],
-                      ),
-                    ),
+                if (snapshot.hasData &&
+                    snapshot.connectionState == ConnectionState.done) {
+                  final remoteData = snapshot.data!;
+                  return DetailScreenSuccessState(
+                    shelf: remoteData,
                   );
                 } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
+                  return DetailScreenErrorState(
+                    error: snapshot.error!,
+                  );
                 }
 
                 // By default, show a loading spinner.
-                return const CircularProgressIndicator();
+                return const DetailScreenLoadingState();
               },
             )
           ],
@@ -86,9 +69,5 @@ class BookshelfDetailView extends StatelessWidget {
         icon: const Icon(Icons.thumb_up),
       ),
     );
-  }
-
-  void onPressed() {
-    print('TODO: Send them to the edit page');
   }
 }
